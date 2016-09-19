@@ -9,18 +9,17 @@ About
 be enabled) with the jpeg pictures stored in the ldap auth_source that 
 ``Redmine`` is configured to work with.
 
+This is a fork of the https://bitbucket.org/celebdor/gemavatar to make it Rails3 compatible
+** the AD property was changed to `thumbnailphoto` **
+
 Installation
 ------------
 
-hg clone this repository while being inside the redmine /vendor/plugins 
-directory(It must be done with the user that runs the web server service, so 
-it has the proper permissions):
+git clone the repo
 
-    hg clone <address> gemavatar
+Do the migration on the database
 
-Add the necessary stuff to the database.
-
-    rake db:migrate_plugins
+`ruby bin/rake redmine:plugins RAILS_ENV="production"`
 
 Restart the web server service.
 
