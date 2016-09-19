@@ -57,6 +57,16 @@ class Picture < ActiveRecord::Base
         else
             location = location_from_login(user_login)
             File.open(location, 'wb') { |f| f.write(picture_data)}
+
+            #crop the avatar to be square
+            original = Magick::Image.read(location)[0]
+            width = original.columns
+            y = (original.rows-width)/2
+            if y<0
+                y=0
+            end
+            croppedimage = original.crop(0,y,width,width)
+            croppedimage.write(location)
         end
         Picture.create(:location => location, :user_id => user_id, :created => DateTime.now.to_date)
     end
