@@ -20,14 +20,14 @@ require 'gemavatar_hooks'
 
 Redmine::Plugin.register :redmine_gemavatar do
   name 'Ldap avatar plugin'
-  author 'Antoni Segura Puimedon'
+  author 'Andrea Guarino + Antoni Segura Puimedon'
   description 'Fetches avatars from LDAP'
-  version '1.0.3'
+  version '1.0.4'
   url ''
-  author_url 'http://celebdor.com'
-  requires_redmine :version_or_higher => '2.2.0'
+  author_url 'https://gitlab.com/u/aguarino'
+  requires_redmine :version_or_higher => '3.2.1'
 
-  settings :default => {'refresh_days' => '7'}, :partial => 'settings/gemavatar'
+  settings :default => {'refresh_days' => '7', 'LDAP_photoprop' =>'thumbnailphoto'}, :partial => 'settings/gemavatar'
 end
 
 RedmineApp::Application.config.after_initialize do

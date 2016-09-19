@@ -37,7 +37,7 @@ class Picture < ActiveRecord::Base
 
     def self.create_from_ldap(user_id, user_login)
         ldap_rec = AuthSourceLdap.first
-        picture_attr = 'thumbnailphoto'
+        picture_attr = Setting.plugin_redmine_gemavatar['LDAP_photoprop']
         ldap_con = initialize_ldap_con(ldap_rec)
 
         login_filter = Net::LDAP::Filter.eq( ldap_rec.attr_login, user_login )
