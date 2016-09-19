@@ -19,7 +19,7 @@ class Picture < ActiveRecord::Base
     unloadable
 
     def self.get_by_user_id(uid)
-        Picture.find(:all, :conditions => {:user_id => uid}).first
+        Picture.where(:user_id => uid).first
     end
 
     def self.initialize_ldap_con(record)
@@ -36,8 +36,8 @@ class Picture < ActiveRecord::Base
     end
 
     def self.create_from_ldap(user_id, user_login)
-        ldap_rec = AuthSourceLdap.find(:all).first
-        picture_attr = 'jpegPhoto'
+        ldap_rec = AuthSourceLdap.first
+        picture_attr = 'thumbnailphoto'
         ldap_con = initialize_ldap_con(ldap_rec)
 
         login_filter = Net::LDAP::Filter.eq( ldap_rec.attr_login, user_login )
