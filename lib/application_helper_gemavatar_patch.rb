@@ -20,17 +20,16 @@ module GemAvatarPlugin
         def self.included(base)
             base.send(:include, InstanceMethods)
             base.class_eval do
-                alias_method :avatar, :avatar_gem
+                alias_method_chain :avatar, :gemavatar
             end
         end
         module InstanceMethods
-            def avatar_gem(user, options = { })
-                if Setting.gravatar_enabled?
+            def avatar_with_gemavatar(user, options = { })
+                if Setting.gravatar_enabled? && user.is_a?(User)
                     options.merge!({:ssl => (defined?(request) && request.ssl?), :default => Setting.gravatar_default})
                     options[:size] = "64" unless options[:size]
-                    base_url = Redmine::Utils.relative_url_root
-                    base_url = base_url + '/' if base_url[-1] != '/'
-                    return "<img class=\"gravatar\" width=\"#{options[:size]}\" height=\"#{options[:size]}\" src=\"#{base_url}gemavatar/show/#{user.id}\" />"
+                    avatar_url = url_for :controller => :pictures, :action => :delete, :user_id => user
+                    return "<img class=\"gravatar\" width=\"#{options[:size]}\" height=\"#{options[:size]}\" src=\"#{avatar_url}\" />".html_safe
                 else
                     ''
                 end
@@ -38,5 +37,3 @@ module GemAvatarPlugin
         end
     end
 end
-
-ApplicationHelper.send(:include, GemAvatarPlugin::ApplicationAvatarPatch)

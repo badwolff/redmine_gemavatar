@@ -1,2 +1,4 @@
-<p><%= label_tag 'settings[refresh_days]', l(:refresh_days) %><%= text_field_tag 'settings[refresh_days]', @settings['refresh_days'], :size => 6 %> <%= l(:label_day_plural) %></p>
-<p><%= label_tag 'settings[allow_reload]', l(:allow_reload) %><%= check_box_tag 'settings[allow_reload]', value = 'yes', @settings['allow_reload'] == 'yes' %></p>
+<p><%= label_tag 'settings[refresh_days]', l(:refresh_days) %>
+    <%= text_field_tag 'settings[refresh_days]', @settings['refresh_days'], :size => 6 %> <%= l(:label_day_plural) %></p>
+<p><%= label_tag 'settings[allow_reload]', l(:allow_reload) %>
+    <%= check_box_tag 'settings[allow_reload]', value = 'yes', @settings['allow_reload'] == 'yes' %></p>

@@ -17,11 +17,6 @@ require 'redmine'
 require 'gravatar'
 require 'application_helper_gemavatar_patch'
 require 'gemavatar_hooks'
-require 'dispatcher'
-
-Dispatcher.to_prepare do
-  ApplicationHelper.send(:include, GemAvatarPlugin::ApplicationAvatarPatch)
-end
 
 Redmine::Plugin.register :redmine_gemavatar do
   name 'Ldap avatar plugin'
@@ -30,5 +25,11 @@ Redmine::Plugin.register :redmine_gemavatar do
   version '1.0.3'
   url ''
   author_url 'http://celebdor.com'
+  requires_redmine :version_or_higher => '2.2.0'
+
   settings :default => {'refresh_days' => '7'}, :partial => 'settings/gemavatar'
+end
+
+RedmineApp::Application.config.after_initialize do
+    ApplicationHelper.send(:include, GemAvatarPlugin::ApplicationAvatarPatch)
 end

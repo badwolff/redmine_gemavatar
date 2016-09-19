@@ -1,39 +1,23 @@
-<%
-base_url = Redmine::Utils.relative_url_root
-base_url = base_url + '/' if base_url[-1] != '/'
-%>
-
-<% content_for :header_tags do %>
+<% content_for :header_tags do -%>
 <script type='text/javascript'>
     // Reload the image
     var reloadAvatarMessage = function(success) {
-        var par = $('avatar')
-        var reloadLink = par.childElements()[1];
-        par.removeChild(reloadLink);
-        if(success) {
-            var htmlText = par.innerHTML + "<strong style=\"color: green\">reloaded</strong>";
-            par.update(htmlText);
+        if (success) {
+            var par = $('#avatar a').remove();
+            $('#avatar').append('<strong style=\"color: green\">reloaded</strong>')
         } else {
-            var htmlText = par.innerHTML + "<strong style=\"color: red\">Failed</strong>.&nbsp;";
-            par.update(htmlText);
-            reloadLink.innerHTML = "Try again.";
-            par.appendChild(reloadLink);
+            ('<strong style="color: red">Failed</strong>.&nbsp;').insertBefore('#avatar a')
+            $('#avatar a').html('Try again.');
         }
     };
 
     var reloadAvatar = function() {
-        //var user = window.location.pathname.split('/')[2]
-        var url = '<%= base_url %>gemavatar/delete/<%= "#{@user.id}" %>'
-
-        new Ajax.Request(url, {
-            method: 'post',
-            requestHeaders: {Accept: 'application/json'},
-            onSuccess: function(resp) {
-                var json = resp.responseText.evalJSON();
-                reloadAvatarMessage(json.deleted);
-            }
+        var deleteUrl = '<%= url_for :controller => :pictures, :action => :delete, :user_id => @user.id %>';
+        $.post(deleteUrl, { _method:'DELETE' }, 'json')
+        .done(function(data) {
+            reloadAvatarMessage(data);
         });
     };
 </script>
 <% end %>
-<p id="avatar"><%= label_tag 'avatar', 'Avatar image' %><a name="avatar" href="javascript:void(0)" onclick="reloadAvatar();">Reload</a></p>
+<p id="avatar"><%= label_tag 'avatar', 'Avatar image' %><a href="javascript:void(0)" onclick="reloadAvatar();">Reload</a></p>

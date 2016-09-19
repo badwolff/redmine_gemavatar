@@ -12,11 +12,10 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with Gemavatar.  If not, see <http://www.gnu.org/licenses/>.
-
 require 'cgi'
-include ActionView::Helpers
 
 class PicturesController < ApplicationController
+    # include ActionView::Helpers
     DEFAULT_OPTIONS = {
         # The URL of a default image to display if the given email address does
         # not have a gravatar.
@@ -46,9 +45,17 @@ class PicturesController < ApplicationController
     end
 
     def delete
-        deleted = Picture.delete_all(:user_id => params[:user_id])
+        deleted = Picture.where(:user_id => params[:user_id]).delete_all
         result = (deleted > 0) ? 'true' : 'false'
         render :json => "{\"deleted\": #{result}}"
+    end
+
+    private
+
+    def gemavatar_for(user, options={})
+        picture = get_picture(user.id, user.login)
+        send_file(picture.location, :filename => user.login, :type => 'image/jpeg', :disposition => 'inline')
+        #gemavatar(user.login, options)
     end
 
     def get_picture(user_id, user_login)
@@ -57,12 +64,6 @@ class PicturesController < ApplicationController
             picture = Picture.create_from_ldap(user_id, user_login)
         end
         picture
-    end
-
-    def gemavatar_for(user, options={})
-        picture = get_picture(user.id, user.login)
-        send_file(picture.location, :filename => user.login, :type => 'image/jpeg', :disposition => 'inline')
-        #gemavatar(user.login, options)
     end
 
     # Return the HTML img tag for the given email address's gravatar.
