@@ -1,0 +1,4 @@
+# English strings go here for Rails i18n
+en:
+  refresh_days: Avatar images chache time expiration 
+  allow_reload: Allow users to reload their avatar 
