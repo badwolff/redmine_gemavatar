@@ -22,9 +22,9 @@ Redmine::Plugin.register :redmine_gemavatar do
   name 'Ldap avatar plugin'
   author 'Andrea Guarino + Antoni Segura Puimedon'
   description 'Fetches avatars from LDAP'
-  version '1.0.4'
+  version '1.1'
   url ''
-  author_url 'https://gitlab.com/u/aguarino'
+  author_url 'https://gitlab.com/u/aguarino/gemavatar'
   requires_redmine :version_or_higher => '3.2.1'
 
   settings :default => {'refresh_days' => '7', 'LDAP_photoprop' =>'thumbnailphoto'}, :partial => 'settings/gemavatar'
