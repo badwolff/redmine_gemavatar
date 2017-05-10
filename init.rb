@@ -27,7 +27,7 @@ Redmine::Plugin.register :redmine_gemavatar do
   author_url 'https://gitlab.com/u/aguarino/gemavatar'
   requires_redmine :version_or_higher => '3.2.1'
 
-  settings :default => {'refresh_days' => '7', 'LDAP_photoprop' =>'thumbnailphoto'}, :partial => 'settings/gemavatar'
+  settings :default => {'refresh_days' => '1', 'LDAP_photoprop' =>'jpegphoto'}, :partial => 'settings/gemavatar'
 end
 
 RedmineApp::Application.config.after_initialize do
