@@ -80,12 +80,12 @@ class Picture < ActiveRecord::Base
     def self.spock_location()
         filename = File.dirname(__FILE__)
         plugin_dir = File.expand_path(File.dirname(File.dirname(filename)))
-        File.join(plugin_dir, 'assets', 'images', 'vulcan_avatar.jpg')
+        File.join(plugin_dir, 'assets', 'images', 'avatar.png')
     end
 
     def old?
-        max_time = Setting.plugin_redmine_gemavatar['refresh_days'].to_i
+        max_time = Setting.plugin_redmine_gemavatar['refresh_days'].to_f
         now = DateTime.now.to_date
-        (now - self.created).to_int > max_time
+        (now - self.created).to_f > max_time
     end
 end
