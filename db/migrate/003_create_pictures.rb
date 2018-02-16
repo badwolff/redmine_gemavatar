@@ -30,10 +30,10 @@ class CreatePictures < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :pictures
     execute <<-SQL
         ALTER TABLE pictures
         DROP FOREIGN KEY fk_user_id
     SQL
+    drop_table :pictures
   end
 end
