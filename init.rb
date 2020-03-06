@@ -31,5 +31,5 @@ Redmine::Plugin.register :redmine_gemavatar do
 end
 
 RedmineApp::Application.config.after_initialize do
-    ApplicationHelper.send(:include, GemAvatarPlugin::ApplicationAvatarPatch)
+    ApplicationHelper.include ApplicationAvatarPatch
 end
