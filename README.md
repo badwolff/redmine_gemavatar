@@ -1,4 +1,4 @@
-# Gemavatar (Redmine 3+)
+# Gemavatar (Redmine 4+)
 
 ## Disclaimer
 This project is a fork of the excellent https://bitbucket.org/celebdor/gemavatar

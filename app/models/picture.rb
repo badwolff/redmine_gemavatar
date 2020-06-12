@@ -61,11 +61,12 @@ class Picture < ActiveRecord::Base
             #crop the avatar to be square
             original = Magick::Image.read(location)[0]
             width = original.columns
-            y = (original.rows-width)/2
-            if y<0
-                y=0
-            end
-            croppedimage = original.crop(0,y,width,width)
+            #y = (original.rows-width)/2
+            #if y<0
+            #    y=0
+            #end
+            #croppedimage = original.crop(0,y,width,width)
+            croppedimage = original.crop(0,0,width,width)
             croppedimage.write(location)
         end
         Picture.create(:location => location, :user_id => user_id, :created => DateTime.now.to_date)

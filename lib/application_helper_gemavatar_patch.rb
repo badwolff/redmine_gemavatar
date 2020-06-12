@@ -13,14 +13,13 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Gemavatar.  If not, see <http://www.gnu.org/licenses/>.
 
-require 'application_helper'
 
-module GemAvatarPlugin
     module ApplicationAvatarPatch
         def self.included(base)
             base.send(:include, InstanceMethods)
             base.class_eval do
-                alias_method_chain :avatar, :gemavatar
+                alias_method :avatar_without_gemavatar, :avatar
+                alias_method :avatar, :avatar_with_gemavatar
             end
         end
         module InstanceMethods
@@ -31,9 +30,8 @@ module GemAvatarPlugin
                     avatar_url = url_for :controller => :pictures, :action => :delete, :user_id => user
                     return "<img class=\"gravatar\" width=\"#{options[:size]}\" height=\"#{options[:size]}\" src=\"#{avatar_url}\" />".html_safe
                 else
-                    ''
+                    avatar_without_gemavatar(user, options)
                 end
             end
         end
     end
-end
